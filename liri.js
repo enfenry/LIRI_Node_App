@@ -5,6 +5,7 @@ require("dotenv").config();
 // const {keys} = require('keys.js');
 
 var axios = require('axios');
+var moment = require('moment');
 var fs = require("fs");
 var Spotify = require('node-spotify-api');
 
@@ -12,10 +13,9 @@ let omdbAPIKey = '12902f82';
 
 // var spotify = new Spotify(keys.spotify);
 
-doAThing(process.argv);
+LIRI(process.argv);
 
-
-function doAThing(nodeArgs) {
+function LIRI(nodeArgs) {
     let objectName = '';
     for (let i = 3; i < nodeArgs.length; i++) {
 
@@ -29,27 +29,39 @@ function doAThing(nodeArgs) {
 
     switch (nodeArgs[2]) {
         case 'concert-this':
-            let queryURL = "https://rest.bandsintown.com/artists/" + objectName + "?app_id=codingbootcamp";
-            axios.get(queryUrl).then(
+            let bandsURL = "https://rest.bandsintown.com/artists/" + objectName + "/events?app_id=codingbootcamp";
+            axios.get(bandsURL).then(
                 function (response) {
+                    for (let i = 0; i < response.data.length; i++) {
+                        console.log(response.data[i].venue.name);
+                        if (response.data[i].venue.region === "") {
+                            var venueLocation = response.data[i].venue.city + ', ' + response.data[i].venue.country;
+                        }
+                        else {
+                            var venueLocation = response.data[i].venue.city + ', ' + response.data[i].venue.region + ', ' + response.data[i].venue.country;
+                        }
 
+                        console.log(venueLocation);
 
-                    // * Name of the venue
+                        let dateTime = response.data[i].datetime;
+                        let date = dateTime.slice(0, 10);
+                        let format = "YYYY-MM-DD";
+                        let convertedDate = moment(dateTime, format);
+                        console.log(convertedDate.format("MM/DD/YYYY"));
 
-                    // * Venue location
-               
-                    // * Date of the Event (use moment to format this as "MM/DD/YYYY")
+                        console.log('');
+                    }
                 }
             );
-
             break;
         case 'spotify-this-song':
             console.log(objectName);
+            
             break;
         case 'movie-this':
-            let queryUrl = 'http://www.omdbapi.com/?t=' + objectName + '&y=&plot=short&apikey=' + omdbAPIKey;
+            let movieURL = 'http://www.omdbapi.com/?t=' + objectName + '&y=&plot=short&apikey=' + omdbAPIKey;
 
-            axios.get(queryUrl).then(
+            axios.get(movieURL).then(
                 function (response) {
                     console.log(response.data.Title + ' (' + response.data.Year + ')')
                     console.log('IMDB: ' + response.data.imdbRating);
@@ -76,7 +88,7 @@ function doAThing(nodeArgs) {
                 else {
                     let dataArr = data.split(',');
                     dataArr.unshift(null, null)
-                    doAThing(dataArr);
+                    LIRI(dataArr);
                 }
             });
             break;
