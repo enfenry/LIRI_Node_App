@@ -1,0 +1,26 @@
+{
+  "name": "LIRI_Node_App",
+  "version": "1.0.0",
+  "description": "Assignment 9",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enfenry/LIRI_Node_App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enfenry/LIRI_Node_App/issues"
+  },
+  "homepage": "https://github.com/enfenry/LIRI_Node_App#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
+    "moment": "^2.24.0",
+    "node-spotify-api": "^1.0.7"
+  }
+}
