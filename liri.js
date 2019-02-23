@@ -8,30 +8,51 @@ var fs = require("fs");
 var Spotify = require('node-spotify-api');
 
 let omdbAPIKey = '12902f82';
+let spotify = new Spotify(keys.spotify);
 
-var spotify = new Spotify(keys.spotify);
+let commandArgs = process.argv.slice(2);
 
-LIRI(process.argv);
+LIRI(commandArgs);
 
-function LIRI(nodeArgs) {
+function addToLog(text) {
+    fs.appendFile("log.txt",'\n' + text, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
+function addLogArray(array) {
+    array.forEach(function(element) {
+        console.log(element);
+        addToLog(element);
+    })
+}
+
+async function LIRI(args) {
+    let logArray = [];
+    let inputString = args.join(' ');;
+    logArray.push(inputString);
+    logArray.push('');
+
     let objectName = '';
-    for (let i = 3; i < nodeArgs.length; i++) {
+    for (let i = 1; i < args.length; i++) {
 
-        if (i > 3 && i < nodeArgs.length) {
-            objectName = objectName + "+" + nodeArgs[i];
+        if (i > 1 && i < args.length) {
+            objectName = objectName + "+" + args[i];
         }
         else {
-            objectName += nodeArgs[i];
+            objectName += args[i];
         }
     }
 
-    switch (nodeArgs[2]) {
+    switch (args[0]) {
         case 'concert-this':
             let bandsURL = "https://rest.bandsintown.com/artists/" + objectName + "/events?app_id=codingbootcamp";
-            axios.get(bandsURL).then(
+            await axios.get(bandsURL).then(
                 function (response) {
                     for (let i = 0; i < response.data.length; i++) {
-                        console.log(response.data[i].venue.name);
+                        logArray.push(response.data[i].venue.name);
                         if (response.data[i].venue.region === "") {
                             var venueLocation = response.data[i].venue.city + ', ' + response.data[i].venue.country;
                         }
@@ -39,17 +60,17 @@ function LIRI(nodeArgs) {
                             var venueLocation = response.data[i].venue.city + ', ' + response.data[i].venue.region + ', ' + response.data[i].venue.country;
                         }
 
-                        console.log(venueLocation);
-
                         let dateTime = response.data[i].datetime;
                         let format = "YYYY-MM-DD";
                         let convertedDate = moment(dateTime, format);
-                        console.log(convertedDate.format("MM/DD/YYYY"));
 
-                        console.log('');
+                        logArray.push(venueLocation);
+                        logArray.push(convertedDate.format("MM/DD/YYYY"));
+                        logArray.push('');
                     }
                 }
             );
+            addLogArray(logArray);
             break;
         case 'spotify-this-song':
             if (objectName === "") {
@@ -70,10 +91,13 @@ function LIRI(nodeArgs) {
                         artists += ',' + result.album.artists[i].name;
                     }
                 }
-                console.log('Song: ' + result.name);
-                console.log('Artist: ' + artists);
-                console.log('Album: ' + result.album.name);
-                console.log('Preview: ' + result.preview_url);
+
+                logArray.push('Song: ' + result.name);
+                logArray.push('Artist: ' + artists);
+                logArray.push('Album: ' + result.album.name);
+                logArray.push('Preview: ' + result.preview_url);
+                logArray.push('');
+                addLogArray(logArray);
             });
 
             break;
@@ -83,24 +107,27 @@ function LIRI(nodeArgs) {
             }
             let movieURL = 'http://www.omdbapi.com/?t=' + objectName + '&y=&plot=short&apikey=' + omdbAPIKey;
 
-            axios.get(movieURL).then(
+            await axios.get(movieURL).then(
                 function (response) {
-                    console.log(response.data.Title + ' (' + response.data.Year + ')')
-                    console.log('IMDB: ' + response.data.imdbRating);
+                    logArray.push(response.data.Title + ' (' + response.data.Year + ')')
+                    logArray.push('IMDB: ' + response.data.imdbRating);
+
                     let ratings = response.data.Ratings;
                     loop:
                     for (let i = 0; i < ratings.length; i++) {
                         if (ratings[i].Source === "Rotten Tomatoes") {
-                            console.log(ratings[i].Source + ': ' + ratings[i].Value);
+                            logArray.push(ratings[i].Source + ': ' + ratings[i].Value);
                             break loop;
                         }
                     }
-                    console.log('Country: ' + response.data.Country)
-                    console.log('Language: ' + response.data.Language);
-                    console.log('Synopsis: ' + response.data.Plot);
-                    console.log('Starring: ' + response.data.Actors);
+                    logArray.push('Country: ' + response.data.Country)
+                    logArray.push('Language: ' + response.data.Language);
+                    logArray.push('Synopsis: ' + response.data.Plot);
+                    logArray.push('Starring: ' + response.data.Actors);
+                    logArray.push('');
                 }
             );
+            addLogArray(logArray);
             break;
         case 'do-what-it-says':
             fs.readFile('random.txt', 'utf8', function (error, data) {
@@ -109,7 +136,6 @@ function LIRI(nodeArgs) {
                 }
                 else {
                     let dataArr = data.split(',');
-                    dataArr.unshift(null, null)
                     LIRI(dataArr);
                 }
             });
