@@ -1,8 +1,6 @@
 require("dotenv").config();
 
-// import keys from 'keys.js';
-// const keys = require('keys.js');
-// const {keys} = require('keys.js');
+var keys = require('./keys');
 
 var axios = require('axios');
 var moment = require('moment');
@@ -11,7 +9,7 @@ var Spotify = require('node-spotify-api');
 
 let omdbAPIKey = '12902f82';
 
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 
 LIRI(process.argv);
 
@@ -44,7 +42,6 @@ function LIRI(nodeArgs) {
                         console.log(venueLocation);
 
                         let dateTime = response.data[i].datetime;
-                        let date = dateTime.slice(0, 10);
                         let format = "YYYY-MM-DD";
                         let convertedDate = moment(dateTime, format);
                         console.log(convertedDate.format("MM/DD/YYYY"));
@@ -55,10 +52,35 @@ function LIRI(nodeArgs) {
             );
             break;
         case 'spotify-this-song':
-            console.log(objectName);
-            
+            if (objectName === "") {
+                objectName = 'Take+On+Me';
+            }
+
+            spotify.search({ type: 'track', query: objectName }, function (err, data) {
+                if (err) {
+                    return console.log('Error occurred: ' + err);
+                }
+
+                let result = data.tracks.items[0];
+                let numArtists = result.album.artists.length;
+                let artists = result.album.artists[0].name
+
+                if (numArtists !== 1) {
+                    for (let i = 1; i < numArtists; i++) {
+                        artists += ',' + result.album.artists[i].name;
+                    }
+                }
+                console.log('Song: ' + result.name);
+                console.log('Artist: ' + artists);
+                console.log('Album: ' + result.album.name);
+                console.log('Preview: ' + result.preview_url);
+            });
+
             break;
         case 'movie-this':
+            if (objectName === "") {
+                objectName = 'Mr.+Nobody';
+            }
             let movieURL = 'http://www.omdbapi.com/?t=' + objectName + '&y=&plot=short&apikey=' + omdbAPIKey;
 
             axios.get(movieURL).then(
