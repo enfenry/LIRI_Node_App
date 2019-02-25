@@ -1,52 +1,51 @@
 
-spotify-this-song "I Want it That Way"
 
-Song: I Want It That Way
-Album: The Hits--Chapter One
-Preview: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=881028a6e3704117bb8709ad1b0fbeb2
 
-Artist: Backstreet Boys
-movie-this Sharknado 3
-
-Sharknado 3: Oh Hell No! (2015)
-IMDB: 4.1
-Rotten Tomatoes: 36%
-Synopsis: A monstrous tornado unleashes ravenous sharks from Washington, D.C., all the way down to Orlando, Florida.
-Starring: Ian Ziering, Tara Reid, Cassandra Scerbo, Frankie Muniz
-Country: USA
-Language: English
-
-concert-this The Strokes
+New York, NY, United States
 
 06/02/2019
 The Governors Ball Music Festival @ Randall's Island Park
-
-Doctor Music Festival (schedule TBA)
-New York, NY, United States
+concert-this The Strokes
 07/11/2019
-
+Doctor Music Festival (schedule TBA)
 Bilbao, Spain
 Bilbao BBk Live (schedule TBA)
-
 07/11/2019
 Lleida, Spain
-07/12/2019
 Doctor Music Festival (schedule TBA)
-Bilbao BBk Live (schedule TBA)
-Bilbao, Spain
-07/12/2019
 
-
-Bilbao BBk Live (schedule TBA)
-07/13/2019
-Bilbao, Spain
-Doctor Music Festival (schedule TBA)
 Lleida, Spain
 
+07/12/2019
+Bilbao BBk Live (schedule TBA)
 
+Bilbao, Spain
+Bilbao BBk Live (schedule TBA)
+07/12/2019
+Bilbao, Spain
 07/13/2019
 Doctor Music Festival (schedule TBA)
+Lleida, Spain
+07/13/2019
 
-Lleida, Spain
-Lleida, Spain
+Doctor Music Festival (schedule TBA)
+
 07/14/2019
+Lleida, Spain
+
+
+
+spotify-this-song Hey Heartbreaker
+Song: Hey Heartbreaker
+
+Artist: Dream Wife
+
+Album: Dream Wife
+Preview: https://p.scdn.co/mp3-preview/5fdc63787fad6747ddad58084918d6ef9c41deb0?cid=881028a6e3704117bb8709ad1b0fbeb2
+
+spotify-this-song
+
+Song: Take on Me
+Artist: a-ha
+Album: Hunting High And Low
+Preview: https://p.scdn.co/mp3-preview/0f980d0fac59f77123d0272b78bce97f1374d9e9?cid=881028a6e3704117bb8709ad1b0fbeb2

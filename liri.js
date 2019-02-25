@@ -29,9 +29,11 @@ function addLogArray(array) {
     })
 }
 
-async function LIRI(args) {
+function LIRI(args) {
     let logArray = [];
     let inputString = args.join(' ');;
+
+    logArray.push('');
     logArray.push(inputString);
     logArray.push('');
 
@@ -49,10 +51,9 @@ async function LIRI(args) {
     switch (args[0]) {
         case 'concert-this':
             let bandsURL = "https://rest.bandsintown.com/artists/" + objectName + "/events?app_id=codingbootcamp";
-            await axios.get(bandsURL).then(
+            axios.get(bandsURL).then(
                 function (response) {
                     for (let i = 0; i < response.data.length; i++) {
-                        logArray.push(response.data[i].venue.name);
                         if (response.data[i].venue.region === "") {
                             var venueLocation = response.data[i].venue.city + ', ' + response.data[i].venue.country;
                         }
@@ -64,13 +65,15 @@ async function LIRI(args) {
                         let format = "YYYY-MM-DD";
                         let convertedDate = moment(dateTime, format);
 
+                        logArray.push(response.data[i].venue.name);
                         logArray.push(venueLocation);
                         logArray.push(convertedDate.format("MM/DD/YYYY"));
                         logArray.push('');
                     }
+                    addLogArray(logArray);
                 }
             );
-            addLogArray(logArray);
+            
             break;
         case 'spotify-this-song':
             if (objectName === "") {
@@ -107,7 +110,7 @@ async function LIRI(args) {
             }
             let movieURL = 'http://www.omdbapi.com/?t=' + objectName + '&y=&plot=short&apikey=' + omdbAPIKey;
 
-            await axios.get(movieURL).then(
+            axios.get(movieURL).then(
                 function (response) {
                     logArray.push(response.data.Title + ' (' + response.data.Year + ')')
                     logArray.push('IMDB: ' + response.data.imdbRating);
@@ -125,9 +128,9 @@ async function LIRI(args) {
                     logArray.push('Synopsis: ' + response.data.Plot);
                     logArray.push('Starring: ' + response.data.Actors);
                     logArray.push('');
+                    addLogArray(logArray);
                 }
             );
-            addLogArray(logArray);
             break;
         case 'do-what-it-says':
             fs.readFile('random.txt', 'utf8', function (error, data) {
