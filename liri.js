@@ -14,45 +14,39 @@ let commandArgs = process.argv.slice(2);
 
 LIRI(commandArgs);
 
-function addToLog(text) {
-    fs.appendFile("log.txt",'\n' + text, function (err) {
+function addLogObject(object) {
+    console.log(JSON.stringify(object,null,4));
+    fs.appendFile("log.txt",'\n' + JSON.stringify(object,null,4), function (err) {
         if (err) {
             console.log(err);
         }
     });
 }
 
-function addLogArray(array) {
-    array.forEach(function(element) {
-        console.log(element);
-        addToLog(element);
-    })
-}
-
 function LIRI(args) {
-    let logArray = [];
     let inputString = args.join(' ');;
+    let logObject = {
+        Input: inputString,
+        Output: {}
+    }
 
-    logArray.push('');
-    logArray.push(inputString);
-    logArray.push('');
-
-    let objectName = '';
+    let thisArg = '';
     for (let i = 1; i < args.length; i++) {
 
         if (i > 1 && i < args.length) {
-            objectName = objectName + "+" + args[i];
+            thisArg = thisArg + "+" + args[i];
         }
         else {
-            objectName += args[i];
+            thisArg += args[i];
         }
     }
 
     switch (args[0]) {
         case 'concert-this':
-            let bandsURL = "https://rest.bandsintown.com/artists/" + objectName + "/events?app_id=codingbootcamp";
+            let bandsURL = "https://rest.bandsintown.com/artists/" + thisArg + "/events?app_id=codingbootcamp";
             axios.get(bandsURL).then(
                 function (response) {
+                    logObject.Output.Venues = [];
                     for (let i = 0; i < response.data.length; i++) {
                         if (response.data[i].venue.region === "") {
                             var venueLocation = response.data[i].venue.city + ', ' + response.data[i].venue.country;
@@ -65,22 +59,22 @@ function LIRI(args) {
                         let format = "YYYY-MM-DD";
                         let convertedDate = moment(dateTime, format);
 
-                        logArray.push(response.data[i].venue.name);
-                        logArray.push(venueLocation);
-                        logArray.push(convertedDate.format("MM/DD/YYYY"));
-                        logArray.push('');
+                        logObject.Output.Venues[i] = {
+                            VenueName: response.data[i].venue.name,
+                            Location: venueLocation,
+                            Date: convertedDate.format("MM/DD/YYYY")
+                        }
                     }
-                    addLogArray(logArray);
+                    addLogObject(logObject);
                 }
             );
-            
             break;
         case 'spotify-this-song':
-            if (objectName === "") {
-                objectName = 'Take+On+Me';
+            if (thisArg === "") {
+                thisArg = 'Take+On+Me';
             }
 
-            spotify.search({ type: 'track', query: objectName }, function (err, data) {
+            spotify.search({ type: 'track', query: thisArg }, function (err, data) {
                 if (err) {
                     return console.log('Error occurred: ' + err);
                 }
@@ -95,40 +89,40 @@ function LIRI(args) {
                     }
                 }
 
-                logArray.push('Song: ' + result.name);
-                logArray.push('Artist: ' + artists);
-                logArray.push('Album: ' + result.album.name);
-                logArray.push('Preview: ' + result.preview_url);
-                logArray.push('');
-                addLogArray(logArray);
+                logObject.Output.Song = result.name;
+                logObject.Output.Artist = artists;
+                logObject.Output.Album = result.album.name;
+                logObject.Output.Preview = result.preview_url;
+                addLogObject(logObject);
             });
-
             break;
         case 'movie-this':
-            if (objectName === "") {
-                objectName = 'Mr.+Nobody';
+            if (thisArg === "") {
+                thisArg = 'Mr.+Nobody';
             }
-            let movieURL = 'http://www.omdbapi.com/?t=' + objectName + '&y=&plot=short&apikey=' + omdbAPIKey;
+            let movieURL = 'http://www.omdbapi.com/?t=' + thisArg + '&y=&plot=short&apikey=' + omdbAPIKey;
 
             axios.get(movieURL).then(
                 function (response) {
-                    logArray.push(response.data.Title + ' (' + response.data.Year + ')')
-                    logArray.push('IMDB: ' + response.data.imdbRating);
+                    logObject.Output.Title = response.data.Title;
+                    logObject.Output.Year = response.data.Year ;
+                    logObject.Output.IMDB = response.data.imdbRating
 
                     let ratings = response.data.Ratings;
                     loop:
                     for (let i = 0; i < ratings.length; i++) {
                         if (ratings[i].Source === "Rotten Tomatoes") {
-                            logArray.push(ratings[i].Source + ': ' + ratings[i].Value);
+                            logObject.Output.RottenTomatoes = ratings[i].Value;
                             break loop;
                         }
                     }
-                    logArray.push('Country: ' + response.data.Country)
-                    logArray.push('Language: ' + response.data.Language);
-                    logArray.push('Synopsis: ' + response.data.Plot);
-                    logArray.push('Starring: ' + response.data.Actors);
-                    logArray.push('');
-                    addLogArray(logArray);
+
+                    logObject.Output.Country = response.data.Country;
+                    logObject.Output.Language = response.data.Language;
+                    logObject.Output.Synopsis = response.data.Plot;
+                    logObject.Output.Stars = response.data.Actors;
+
+                    addLogObject(logObject);
                 }
             );
             break;

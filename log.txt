@@ -1,51 +1,88 @@
 
-
-
-New York, NY, United States
-
-06/02/2019
-The Governors Ball Music Festival @ Randall's Island Park
-concert-this The Strokes
-07/11/2019
-Doctor Music Festival (schedule TBA)
-Bilbao, Spain
-Bilbao BBk Live (schedule TBA)
-07/11/2019
-Lleida, Spain
-Doctor Music Festival (schedule TBA)
-
-Lleida, Spain
-
-07/12/2019
-Bilbao BBk Live (schedule TBA)
-
-Bilbao, Spain
-Bilbao BBk Live (schedule TBA)
-07/12/2019
-Bilbao, Spain
-07/13/2019
-Doctor Music Festival (schedule TBA)
-Lleida, Spain
-07/13/2019
-
-Doctor Music Festival (schedule TBA)
-
-07/14/2019
-Lleida, Spain
-
-
-
-spotify-this-song Hey Heartbreaker
-Song: Hey Heartbreaker
-
-Artist: Dream Wife
-
-Album: Dream Wife
-Preview: https://p.scdn.co/mp3-preview/5fdc63787fad6747ddad58084918d6ef9c41deb0?cid=881028a6e3704117bb8709ad1b0fbeb2
-
-spotify-this-song
-
-Song: Take on Me
-Artist: a-ha
-Album: Hunting High And Low
-Preview: https://p.scdn.co/mp3-preview/0f980d0fac59f77123d0272b78bce97f1374d9e9?cid=881028a6e3704117bb8709ad1b0fbeb2
+{
+    "Input": "concert-this The Strokes",
+    "Output": {
+        "Venues": [
+            {
+                "VenueName": "The Governors Ball Music Festival @ Randall's Island Park",
+                "Location": "New York, NY, United States",
+                "Date": "06/02/2019"
+            },
+            {
+                "VenueName": "Doctor Music Festival (schedule TBA)",
+                "Location": "Lleida, Spain",
+                "Date": "07/11/2019"
+            },
+            {
+                "VenueName": "Bilbao BBk Live (schedule TBA)",
+                "Location": "Bilbao, Spain",
+                "Date": "07/11/2019"
+            },
+            {
+                "VenueName": "Doctor Music Festival (schedule TBA)",
+                "Location": "Lleida, Spain",
+                "Date": "07/12/2019"
+            },
+            {
+                "VenueName": "Bilbao BBk Live (schedule TBA)",
+                "Location": "Bilbao, Spain",
+                "Date": "07/12/2019"
+            },
+            {
+                "VenueName": "Bilbao BBk Live (schedule TBA)",
+                "Location": "Bilbao, Spain",
+                "Date": "07/13/2019"
+            },
+            {
+                "VenueName": "Doctor Music Festival (schedule TBA)",
+                "Location": "Lleida, Spain",
+                "Date": "07/13/2019"
+            },
+            {
+                "VenueName": "Doctor Music Festival (schedule TBA)",
+                "Location": "Lleida, Spain",
+                "Date": "07/14/2019"
+            }
+        ]
+    }
+}
+{
+    "Input": "spotify-this-song Hotel Yorba",
+    "Output": {
+        "Song": "Hotel Yorba",
+        "Artist": "The White Stripes",
+        "Album": "White Blood Cells",
+        "Preview": "https://p.scdn.co/mp3-preview/27191902d58c208c631f5b1b709fcb8a2e4ed3c7?cid=881028a6e3704117bb8709ad1b0fbeb2"
+    }
+}
+{
+    "Input": "spotify-this-song",
+    "Output": {
+        "Song": "Take on Me",
+        "Artist": "a-ha",
+        "Album": "Hunting High And Low",
+        "Preview": "https://p.scdn.co/mp3-preview/0f980d0fac59f77123d0272b78bce97f1374d9e9?cid=881028a6e3704117bb8709ad1b0fbeb2"
+    }
+}
+{
+    "Input": "movie-this Sharknado 3",
+    "Output": {
+        "Title": "Sharknado 3: Oh Hell No!",
+        "Year": "2015",
+        "IMDB": "4.1",
+        "RottenTomatoes": "36%",
+        "Country": "USA",
+        "Language": "English",
+        "Synopsis": "A monstrous tornado unleashes ravenous sharks from Washington, D.C., all the way down to Orlando, Florida.",
+        "Stars": "Ian Ziering, Tara Reid, Cassandra Scerbo, Frankie Muniz"
+    }
+}
+{
+    "Input": "spotify-this-song \"I Want it That Way\"",
+    "Output": {
+        "Song": "I Want It That Way",
+        "Artist": "Backstreet Boys",
+        "Album": "The Hits--Chapter One",
+        "Preview": "https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=881028a6e3704117bb8709ad1b0fbeb2"
+    }
+}
