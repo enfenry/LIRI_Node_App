@@ -17,7 +17,6 @@ Built using:
    * [DotEnv](https://www.npmjs.com/package/dotenv)
 
 
-Link to video demonstrating the various functions:
-https://streamable.com/gnr1p
+[Video demonstrating the various functions] (https://streamable.com/gnr1p)
 
 (Video also available for download within the repository)
